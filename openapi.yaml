@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Currency Converter API
+  description: API for converting currencies using the Exchange Rates Data API.
+  version: 1.0.0
+servers:
+  - url: https://currencyconvertionplugin.ahasanabir.repl.co
+paths:
+  /convert:
+    get:
+      summary: Convert currency
+      description: Converts an amount from one currency to another.
+      parameters:
+        - name: from
+          in: query
+          required: true
+          description: The currency code to convert from.
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          description: The currency code to convert to.
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: true
+          description: The amount to convert.
+          schema:
+            type: number
+        - name: date
+          in: query
+          required: false
+          description: The date of exchange rate (optional).
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful conversion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  from:
+                    type: string
+                    description: The currency code converted from.
+                  to:
+                    type: string
+                    description: The currency code converted to.
+                  amount:
+                    type: number
+                    description: The original amount.
+                  converted_amount:
+                    type: number
+                    description: The converted amount.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message for the bad request.
